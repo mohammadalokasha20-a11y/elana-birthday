@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>It Started With AC</title>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:#05010a;
+color:white;
+font-family:Arial;
+overflow-x:hidden;
+}
+
+.screen{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+}
+
+.hidden{display:none}
+
+.terminal{
+font-family:monospace;
+color:#00f7ff;
+text-shadow:0 0 10px #00f7ff;
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#7c3aed;
+color:white;
+margin-top:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:15px;
+backdrop-filter:blur(10px);
+}
+
+img{max-width:80%;border-radius:12px}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+width:80%;
+}
+
+.gallery img{
+width:100%;
+cursor:pointer;
+transition:0.3s;
+}
+
+.gallery img:hover{transform:scale(1.05)}
+
+video{width:80%;border-radius:12px}
+</style>
+</head>
+
+<body>
+
+<div id="s1" class="screen terminal">
+<h2>Initializing Memory...</h2>
+<p>Searching first interaction...</p>
+<button onclick="go1()">Start</button>
+</div>
+
+<div id="s2" class="screen hidden">
+<div class="card">
+<h2>Memory Found ✓</h2>
+<img src="images/1.jpg">
+<p>It all started with an AC circuit... ⚡</p>
+<button onclick="go2()">Continue</button>
+</div>
+</div>
+
+<div id="s3" class="screen hidden">
+<video id="v" controls>
+<source src="chat.mp4" type="video/mp4">
+</video>
+<button onclick="go3()">Skip</button>
+</div>
+
+<div id="s4" class="screen hidden">
+<h2>Happy Birthday Elana 🎂</h2>
+<p>Software Engineer. Dreamer. Creator.</p>
+
+<div class="gallery" id="g"></div>
+</div>
+
+<script>
+function go1(){
+gsap.to("#s1",{opacity:0,duration:1,onComplete:()=>{
+document.getElementById("s1").classList.add("hidden");
+document.getElementById("s2").classList.remove("hidden");
+}});
+}
+
+function go2(){
+gsap.to("#s2",{opacity:0,duration:1,onComplete:()=>{
+document.getElementById("s2").classList.add("hidden");
+document.getElementById("s3").classList.remove("hidden");
+document.getElementById("v").play();
+}});
+}
+
+function go3(){
+document.getElementById("s3").classList.add("hidden");
+document.getElementById("s4").classList.remove("hidden");
+
+let g=document.getElementById("g");
+for(let i=1;i<=8;i++){
+let im=document.createElement("img");
+im.src="images/"+i+".jpg";
+im.onclick=()=>{window.open(im.src)};
+g.appendChild(im);
+}
+
+gsap.from("#s4",{opacity:0,duration:2});
+}
+</script>
+
+</body>
+</html>
